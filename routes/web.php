@@ -15,6 +15,7 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->get('/bank', 'Controller@show_bank_list');
-$router->post('/del_bank', 'Controller@del_bank');
-$router->post('/add_bank', 'Controller@add_bank');
+$router->get('/bank', 'BankController@show_bank_list');
+$router->post('/del_bank', 'BankController@del_bank');
+$router->post('/add_bank', 'BankController@add_bank');
+$router->post('/edit_bank', 'BankController@edit_bank');

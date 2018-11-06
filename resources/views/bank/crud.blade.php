@@ -25,7 +25,11 @@
 <td>{{$bank->City}}</td>
 <td>{{$bank->Province}}</td>
 <td>{{$bank->ZIP}}</td>
-<td><input type="button" class="btn btn-danger" onclick="onClickDel({{$bank->Bcode}})"  value="DELETE" ></td>
+<td>
+    <input type="button" class="btn btn-warning" Bcode="{{$bank->Bcode}}" BName="{{$bank->Name}}" BStreet="{{$bank->Street}}" BCity="{{$bank->City}}" BProvince="{{$bank->Province}}" BZIP="{{$bank->ZIP}}"  onclick="onClickEdit(this)"   value="EDIT">
+    <input type="button" class="btn btn-danger" onclick="onClickDel({{$bank->Bcode}})"  value="DELETE" >
+    
+</td>
 
 
 </tr>
@@ -33,6 +37,9 @@
 
 </tbody>
 </table>
+</div>
+<div class="form-group">
+    <input type="button" class="btn btn-primary" onclick="onAddBankClick()" value="Add Bank">
 </div>
 <div>
 <div class="form-group">
@@ -57,8 +64,9 @@
         <input type=" text" class="form-control" id="ZIP" >
     </div>
 
-
-  <input type="button" id="addBank" class="btn btn-primary" value="Submit">
+    
+    <input type="button" id="editBank" class="btn btn-warning" value="Edit">
+    <input type="button" id="addBank" class="btn btn-primary" value="Submit">
 </div>
 
 
@@ -66,6 +74,39 @@
 
 @section('script')
 <script>
+    function onAddBankClick(){
+        $("#Bcode").prop("disabled",false);
+        $("#Bcode").val("");
+        $("#Name").val("");
+        $("#Street").val("");
+        $("#City").val("");
+        $("#Province").val("");
+        $("#ZIP").val("");
+        
+        $("#editBank").hide();
+        $("#addBank").show();
+    }
+
+    function onClickEdit(param){
+        var Bcode = $(param).attr("Bcode");
+        var Name = $(param).attr("BName");
+        var Street = $(param).attr("BStreet");
+        var City = $(param).attr("BCity");
+        var Province = $(param).attr("BProvince");
+        var ZIP = $(param).attr("BZIP");
+        
+        $("#Bcode").prop("disabled",true);
+        $("#Bcode").val(Bcode);
+        $("#Name").val(Name);
+        $("#Street").val(Street);
+        $("#City").val(City);
+        $("#Province").val(Province);
+        $("#ZIP").val(ZIP);
+
+        $("#editBank").show();
+        $("#addBank").hide();
+    }
+
     function onClickDel(Bcode){
         $.post("/del_bank",
                     {
@@ -80,6 +121,34 @@
     }
 
     $(document).ready(function() {
+        $("#editBank").hide();
+
+        $("#editBank").click(function(){
+            var Bcode = $("#Bcode").val();
+            var Name = $("#Name").val();
+            var Street = $("#Street").val();
+            var City = $("#City").val();
+            var Province = $("#Province").val();
+            var ZIP = $("#ZIP").val();
+
+
+            $.post("/edit_bank",
+                    {
+                        Bcode: Bcode,
+                        Name: Name,
+                        Street: Street,
+                        City: City,
+                        Province: Province,
+                        ZIP: ZIP,
+                                    
+                    },
+                    function (data, status) {
+                        if (data.status) {
+                            document.location = document.location
+                        }
+                    });
+        });
+
         $("#addBank").click(function(){
             var Bcode = $("#Bcode").val();
             var Name = $("#Name").val();
