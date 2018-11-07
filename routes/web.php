@@ -19,3 +19,8 @@ $router->get('/bank', 'BankController@show_bank_list');
 $router->post('/del_bank', 'BankController@del_bank');
 $router->post('/add_bank', 'BankController@add_bank');
 $router->post('/edit_bank', 'BankController@edit_bank');
+
+$router->get('/branch', 'BranchController@show_branch_list');
+$router->post('/add_branch', 'BranchController@add_branch');
+$router->post('/del_branch', 'BranchController@del_branch');
+$router->post('/edit_branch', 'BranchController@edit_branch');
