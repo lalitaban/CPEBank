@@ -74,7 +74,7 @@
         <label>Bcode</label>
         <select class="form-control" id="Bcode">
         @foreach($banks as $bank)
-            <option value="{{$bank->Bcode}}">{{$bank->Name}}</option>
+            <option value="{{$bank->Bcode}}">{{$bank->Bcode}} : {{$bank->Name}}</option>
         @endforeach
         </select>
     </div>
